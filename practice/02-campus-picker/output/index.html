@@ -131,6 +131,13 @@
     }
     .btn-secondary:hover { background: #e2e8f0; }
 
+    .shortcut-hint {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
     .result-box {
       min-height: 120px;
       display: flex;
@@ -142,6 +149,7 @@
       border-radius: 8px;
       background: #f8fafc;
       border: 2px dashed #cbd5e1;
+      overflow: hidden;
     }
     .result-empty {
       color: #94a3b8;
@@ -151,10 +159,22 @@
       color: #dc2626;
       font-weight: 600;
       font-size: 1.1rem;
+      animation: fadeIn 0.3s ease-in-out;
     }
     .result-content {
       width: 100%;
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     .result-id {
       display: inline-block;
       padding: 2px 8px;
@@ -211,6 +231,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      animation: fadeIn 0.25s ease-out;
     }
     .history-empty {
       color: #94a3b8;
@@ -263,6 +284,9 @@
         <button class="btn btn-primary" id="btn-pick" onclick="pickActivity()">幫我選</button>
         <button class="btn btn-secondary" id="btn-reset" onclick="resetFilters()">重設篩選</button>
       </div>
+      <div class="shortcut-hint" id="ui-shortcut-hint">
+        ⌨️ 快捷鍵：按 Enter 鍵快速挑選，按 R 鍵重設篩選
+      </div>
     </div>
 
     <div class="card">
@@ -300,6 +324,8 @@
 
     let currentLang = 'zh';
     let historyRecords = [];
+    let lastPickedActivity = null;
+    let lastPickState = 'empty';
 
     const translations = {
       zh: {
@@ -320,6 +346,7 @@
         energyMedium: "中",
         pickBtn: "幫我選",
         resetBtn: "重設篩選",
+        shortcutHint: "⌨️ 快捷鍵：按 Enter 鍵快速挑選，按 R 鍵重設篩選",
         emptyPrompt: "設定好篩選條件，點擊「幫我選」開始！",
         noMatch: "沒有符合條件的活動",
         historyTitle: "最近抽選紀錄（最多 5 筆）",
@@ -346,6 +373,7 @@
         energyMedium: "Medium",
         pickBtn: "Pick for me",
         resetBtn: "Reset filters",
+        shortcutHint: "⌨️ Shortcuts: Press Enter to pick, R to reset filters",
         emptyPrompt: "Set your filters and click \"Pick for me\" to start!",
         noMatch: "No matching activities found",
         historyTitle: "Recent picks (Up to 5)",
@@ -384,6 +412,7 @@
 
       document.getElementById('btn-pick').textContent = t.pickBtn;
       document.getElementById('btn-reset').textContent = t.resetBtn;
+      document.getElementById('ui-shortcut-hint').textContent = t.shortcutHint;
       document.getElementById('ui-history-title').textContent = t.historyTitle;
       document.getElementById('btn-clear').textContent = t.clearBtn;
       document.getElementById('ui-history-empty').textContent = t.historyEmpty;
@@ -397,9 +426,6 @@
         document.getElementById('result-box').innerHTML = `<p class="result-empty">${t.emptyPrompt}</p>`;
       }
     }
-
-    let lastPickedActivity = null;
-    let lastPickState = 'empty';
 
     function pickActivity() {
       const loc = document.getElementById('sel-location').value;
@@ -418,7 +444,13 @@
         lastPickState = 'none';
         renderNoMatch();
       } else {
-        const picked = filtered[Math.floor(Math.random() * filtered.length)];
+        let candidates = filtered;
+        if (filtered.length > 1 && lastPickedActivity) {
+          const nonRepeat = filtered.filter(a => a.id !== lastPickedActivity.id);
+          if (nonRepeat.length > 0) candidates = nonRepeat;
+        }
+
+        const picked = candidates[Math.floor(Math.random() * candidates.length)];
         lastPickedActivity = picked;
         lastPickState = 'picked';
         renderResult(picked);
@@ -487,6 +519,18 @@
         `;
       }).join('');
     }
+
+    // Keyboard shortcuts: Enter = pick, r/R = reset
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        pickActivity();
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        resetFilters();
+      }
+    });
   </script>
 </body>
 </html>
