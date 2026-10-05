@@ -1,0 +1,62 @@
+[
+  {
+    "source": "proposal_final.txt",
+    "destination": "01-planning-and-proposals/proposal_final.txt",
+    "reason": "企畫第 1 版（室外活動 30 分鐘方案），保留作為對照"
+  },
+  {
+    "source": "proposal_final2.txt",
+    "destination": "01-planning-and-proposals/proposal_final2.txt",
+    "reason": "企畫第 2 版（室內活動 20 分鐘方案），不同方案完整保留"
+  },
+  {
+    "source": "meeting_notes.txt",
+    "destination": "01-planning-and-proposals/meeting_notes.txt",
+    "reason": "記錄下次會議需討論室內與室外方案的會議紀錄"
+  },
+  {
+    "source": "rain_plan.txt",
+    "destination": "01-planning-and-proposals/rain_plan.txt",
+    "reason": "下雨時改為室內備案之應變計畫"
+  },
+  {
+    "source": "next_steps.txt",
+    "destination": "01-planning-and-proposals/next_steps.txt",
+    "reason": "後續待辦事項提醒，強調兩案皆尚未核定"
+  },
+  {
+    "source": "budget_draft.txt",
+    "destination": "02-logistics-and-budget/budget_draft.txt",
+    "reason": "活動紙張預算草案，記錄預估費用"
+  },
+  {
+    "source": "equipment_list.txt",
+    "destination": "02-logistics-and-budget/equipment_list.txt",
+    "reason": "活動所需麥克筆與圖畫紙之器材物資清單"
+  },
+  {
+    "source": "equipment_backup.txt",
+    "destination": "02-logistics-and-budget/equipment_backup.txt",
+    "reason": "器材清單備份，雖內容完全相同仍保留獨立複本"
+  },
+  {
+    "source": "announcement.txt",
+    "destination": "03-publicity-and-feedback/announcement.txt",
+    "reason": "提醒自備筆記本的活動宣傳通知文字"
+  },
+  {
+    "source": "announcement_copy.txt",
+    "destination": "03-publicity-and-feedback/announcement_copy.txt",
+    "reason": "宣傳通知複本，雖內容完全相同仍保留獨立複本"
+  },
+  {
+    "source": "poster_text.txt",
+    "destination": "03-publicity-and-feedback/poster_text.txt",
+    "reason": "文宣海報上的文案標語"
+  },
+  {
+    "source": "feedback_questions.txt",
+    "destination": "03-publicity-and-feedback/feedback_questions.txt",
+    "reason": "活動後收集回饋意見的問題清單"
+  }
+]
